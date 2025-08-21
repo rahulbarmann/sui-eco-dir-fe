@@ -1,0 +1,23 @@
+<svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_110_463)">
+<rect width="55" height="55" rx="8" fill="url(#paint0_linear_110_463)"/>
+<rect width="55" height="55" rx="8" fill="url(#paint1_linear_110_463)"/>
+<rect x="1.5" y="1.5" width="52" height="52" rx="8" fill="black"/>
+<circle cx="27.5001" cy="27.5" r="13.3333" stroke="white" stroke-width="1.8"/>
+<ellipse cx="27.5001" cy="27.5" rx="5.33333" ry="13.3333" stroke="white" stroke-width="1.8"/>
+<path d="M14.1667 27.5H40.8334" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_110_463" x1="60.0536" y1="47.6009" x2="-3.0666" y2="4.48991" gradientUnits="userSpaceOnUse">
+<stop stop-color="#4DA2FF"/>
+<stop offset="0.25" stop-color="#4DA2FF" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint1_linear_110_463" x1="1.89615" y1="-1.51281" x2="50.1018" y2="58.9079" gradientUnits="userSpaceOnUse">
+<stop stop-color="#4DA2FF"/>
+<stop offset="0.25" stop-color="#4DA2FF" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="clip0_110_463">
+<rect width="55" height="55" rx="8" fill="white"/>
+</clipPath>
+</defs>
+</svg>

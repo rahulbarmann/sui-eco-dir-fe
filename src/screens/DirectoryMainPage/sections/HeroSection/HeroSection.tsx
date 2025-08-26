@@ -2,16 +2,28 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FrontendAPI, Project } from "../../../../lib/utils";
 
-// Category SVG mapping
+// Category SVG mapping - more comprehensive mapping
 const categorySvgMap: { [key: string]: string } = {
     DeFi: "public/category/defi.svg",
     "NFTs & Gaming": "public/category/nft-gaming.svg",
+    "NFT & Gaming": "public/category/nft-gaming.svg", // Alternative naming
     Infrastructure: "public/category/infrastructure.svg",
     Tooling: "public/category/tooling.svg",
     "Open Source": "public/category/opensource.svg",
     "DAOs & Governance": "public/category/dao-governance.svg",
+    "DAO & Governance": "public/category/dao-governance.svg", // Alternative naming
     Launchpad: "public/category/launchpad.svg",
     "Naming Service": "public/category/naming-service.svg",
+};
+
+// Helper to get SVG path or generate fallback
+const getCategoryDisplay = (category: string) => {
+    const svgPath = categorySvgMap[category];
+    return {
+        hasSvg: !!svgPath,
+        svgPath: svgPath,
+        fallbackText: category,
+    };
 };
 
 export const HeroSection = (): JSX.Element => {
@@ -102,27 +114,56 @@ export const HeroSection = (): JSX.Element => {
                                             break;
                                         }
                                         const category = project.categories[i];
-                                        const svgPath =
-                                            categorySvgMap[category];
-                                        nodes.push(
-                                            svgPath ? (
-                                                <img
+                                        const categoryDisplay =
+                                            getCategoryDisplay(category);
+
+                                        if (categoryDisplay.hasSvg) {
+                                            nodes.push(
+                                                <div
                                                     key={i}
-                                                    src={svgPath}
-                                                    alt={category}
-                                                    className="h-8 sm:h-10"
-                                                />
-                                            ) : (
+                                                    className="h-8 sm:h-10 flex items-center justify-center p-0.5 overflow-hidden"
+                                                >
+                                                    <img
+                                                        src={
+                                                            categoryDisplay.svgPath
+                                                        }
+                                                        alt={category}
+                                                        className="h-full w-auto object-contain filter drop-shadow-[0_0_0.5px_rgba(0,0,0,0.5)]"
+                                                        style={{
+                                                            imageRendering:
+                                                                "crisp-edges",
+                                                        }}
+                                                        onError={(e) => {
+                                                            // Replace failed image with text badge
+                                                            const target =
+                                                                e.target as HTMLImageElement;
+                                                            const parent =
+                                                                target.parentElement;
+                                                            if (parent) {
+                                                                parent.innerHTML = `
+                                        <div class="h-8 sm:h-10 px-3 py-1 rounded-full bg-[#4DA2FF]/20 border border-[#4DA2FF]/30 flex items-center justify-center">
+                                            <span class="text-[#4DA2FF] text-xs font-medium whitespace-nowrap">
+                                                ${category}
+                                            </span>
+                                        </div>
+                                    `;
+                                                            }
+                                                        }}
+                                                    />
+                                                </div>
+                                            );
+                                        } else {
+                                            nodes.push(
                                                 <div
                                                     key={i}
                                                     className="h-8 sm:h-10 px-3 py-1 rounded-full bg-[#4DA2FF]/20 border border-[#4DA2FF]/30 flex items-center justify-center"
                                                 >
-                                                    <span className="text-[#4DA2FF] text-xs font-medium">
+                                                    <span className="text-[#4DA2FF] text-xs font-medium whitespace-nowrap">
                                                         {category}
                                                     </span>
                                                 </div>
-                                            )
-                                        );
+                                            );
+                                        }
                                     }
                                     return nodes;
                                 })()}

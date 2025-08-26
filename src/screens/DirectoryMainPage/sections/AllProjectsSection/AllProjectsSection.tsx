@@ -2,13 +2,42 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { FrontendAPI, Project } from "../../../../lib/utils";
 
-// Helper to slugify category to file name
+// More comprehensive category to SVG mapping
+const categorySvgMap: { [key: string]: string } = {
+    DeFi: "public/category/defi.svg",
+    "NFTs & Gaming": "public/category/nft-gaming.svg",
+    "NFT & Gaming": "public/category/nft-gaming.svg",
+    Infrastructure: "public/category/infrastructure.svg",
+    Tooling: "public/category/tooling.svg",
+    "Open Source": "public/category/opensource.svg",
+    "DAOs & Governance": "public/category/dao-governance.svg",
+    "DAO & Governance": "public/category/dao-governance.svg",
+    Launchpad: "public/category/launchpad.svg",
+    "Naming Service": "public/category/naming-service.svg",
+};
+
+// Helper to slugify category to file name (fallback method)
 const categoryToSvg = (category: string): string => {
+    // First check the mapping
+    if (categorySvgMap[category]) {
+        return categorySvgMap[category];
+    }
+
+    // Fallback to slugified version
     return `public/category/${category
         .toLowerCase()
         .replace(/\s*&\s*/g, "-")
         .replace(/\s+/g, "-")
         .replace(/open-source/i, "opensource")}.svg`;
+};
+
+// Helper to get category display info
+const getCategoryDisplay = (category: string) => {
+    const svgPath = categorySvgMap[category] || categoryToSvg(category);
+    return {
+        svgPath: svgPath,
+        fallbackText: category,
+    };
 };
 
 type Props = {
@@ -112,7 +141,7 @@ export const AllProjectsSection = ({
                                 <div className="flex items-center gap-2 flex-wrap">
                                     {(() => {
                                         const icons: JSX.Element[] = [];
-                                        const maxPerRow = 5; // conservative fit; responsive already wraps
+                                        const maxPerRow = 5;
                                         for (
                                             let i = 0;
                                             i < project.categories.length;
@@ -129,14 +158,44 @@ export const AllProjectsSection = ({
                                                 );
                                                 break;
                                             }
-                                            const tag = project.categories[i];
+                                            const category =
+                                                project.categories[i];
+                                            const categoryDisplay =
+                                                getCategoryDisplay(category);
+
                                             icons.push(
-                                                <img
+                                                <div
                                                     key={i}
-                                                    src={categoryToSvg(tag)}
-                                                    alt={tag}
-                                                    className="h-8 sm:h-10"
-                                                />
+                                                    className="h-8 sm:h-10 flex items-center justify-center p-0.5 overflow-hidden"
+                                                >
+                                                    <img
+                                                        src={
+                                                            categoryDisplay.svgPath
+                                                        }
+                                                        alt={category}
+                                                        className="h-full w-auto object-contain filter drop-shadow-[0_0_0.5px_rgba(0,0,0,0.5)]"
+                                                        style={{
+                                                            imageRendering:
+                                                                "crisp-edges",
+                                                        }}
+                                                        onError={(e) => {
+                                                            // Replace failed image with text badge
+                                                            const target =
+                                                                e.target as HTMLImageElement;
+                                                            const parent =
+                                                                target.parentElement;
+                                                            if (parent) {
+                                                                parent.innerHTML = `
+                                    <div class="h-8 sm:h-10 px-3 py-1 rounded-full bg-[#4DA2FF]/20 border border-[#4DA2FF]/30 flex items-center justify-center">
+                                        <span class="text-[#4DA2FF] text-xs font-medium whitespace-nowrap">
+                                            ${category}
+                                        </span>
+                                    </div>
+                                `;
+                                                            }
+                                                        }}
+                                                    />
+                                                </div>
                                             );
                                         }
                                         return icons;

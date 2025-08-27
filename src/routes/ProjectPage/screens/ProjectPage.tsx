@@ -154,7 +154,7 @@ export const ProjectPage = (): JSX.Element => {
     }
 
     return (
-        <div className="relative w-full min-w-full bg-[#050505] overflow-hidden flex flex-col">
+        <div className="relative w-full min-w-full bg-[#000000] overflow-hidden flex flex-col">
             <div className="relative w-full min-w-full">
                 {/* Background grid */}
                 <div className="bg-grid-container h-screen relative">

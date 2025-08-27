@@ -95,7 +95,7 @@ export const AllProjectsSection = ({
                     Array.from({ length: 6 }).map((_, i) => (
                         <div
                             key={`skeleton-${i}`}
-                            className="w-full min-h-[268px] rounded-2xl bg-[#0b0b0b] animate-pulse"
+                            className="w-full min-h-[320px] rounded-2xl bg-[#0b0b0b] animate-pulse"
                         />
                     ))}
                 {!loading && error && (
@@ -107,13 +107,13 @@ export const AllProjectsSection = ({
                     <Link
                         key={`project-${index}`}
                         to={`/project/${project.id}`}
-                        className="w-full min-h-[268px] rounded-2xl relative hover:scale-[1.02] transition-transform duration-200"
+                        className="w-full min-h-[320px] rounded-2xl relative hover:scale-[1.02] transition-transform duration-200"
                     >
                         {/* Card gradient border */}
                         <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(50%_50%_at_49%_-36%,rgba(138,165,255,0.7)_0%,rgba(0,0,0,0.7)_100%)]" />
 
                         {/* Card content */}
-                        <div className="absolute inset-[1px] rounded-2xl bg-[radial-gradient(50%_50%_at_50%_8%,rgba(18,20,38,1)_0%,rgba(0,0,0,1)_100%)] p-6 sm:p-8 flex flex-col gap-6">
+                        <div className="absolute inset-[1px] rounded-2xl bg-[radial-gradient(50%_50%_at_50%_8%,rgba(18,20,38,1)_0%,rgba(0,0,0,1)_100%)] p-6 sm:p-8 flex flex-col gap-4">
                             {/* Logo Section */}
                             <div className="flex w-full items-center">
                                 <div className="p-[1.5px] rounded-lg inline-flex items-center justify-center relative overflow-hidden">
@@ -131,42 +131,50 @@ export const AllProjectsSection = ({
                             </div>
 
                             {/* Content Section */}
-                            <div className="flex flex-col w-full items-start justify-center gap-4">
+                            <div className="flex flex-col w-full items-start justify-center gap-3 flex-grow">
                                 {/* Title */}
                                 <h3 className="self-stretch font-medium text-white text-xl sm:text-2xl tracking-[-0.48px] leading-7 [font-family:'Satoshi-Medium',Helvetica]">
                                     {project.name}
                                 </h3>
 
-                                {/* Categories */}
-                                <div className="flex items-center gap-2 flex-wrap">
+                                {/* Categories - Single row with proper overflow handling */}
+                                <div className="flex items-center gap-2 w-full overflow-hidden relative">
                                     {(() => {
                                         const icons: JSX.Element[] = [];
-                                        const maxPerRow = 5;
+                                        let totalWidth = 0;
+                                        const maxWidth = 240; // Approximate max width for categories
+                                        let categoriesShown = 0;
+                                        let showEllipsis = false;
+
                                         for (
                                             let i = 0;
                                             i < project.categories.length;
                                             i++
                                         ) {
-                                            if (i >= maxPerRow) {
-                                                icons.push(
-                                                    <span
-                                                        key="more"
-                                                        className="text-[#e6ecffb2]"
-                                                    >
-                                                        ...
-                                                    </span>
-                                                );
-                                                break;
-                                            }
                                             const category =
                                                 project.categories[i];
                                             const categoryDisplay =
                                                 getCategoryDisplay(category);
 
+                                            // Approximate width of each category (icon + margin)
+                                            const categoryWidth = 40;
+
+                                            if (
+                                                totalWidth + categoryWidth >
+                                                    maxWidth &&
+                                                i > 0
+                                            ) {
+                                                showEllipsis = true;
+                                                break;
+                                            }
+
+                                            totalWidth += categoryWidth;
+                                            categoriesShown++;
+
                                             icons.push(
                                                 <div
                                                     key={i}
-                                                    className="h-8 sm:h-10 flex items-center justify-center p-0.5 overflow-hidden"
+                                                    className="h-8 sm:h-10 flex items-center justify-center p-0.5 overflow-hidden shrink-0"
                                                 >
                                                     <img
                                                         src={
@@ -186,24 +194,41 @@ export const AllProjectsSection = ({
                                                                 target.parentElement;
                                                             if (parent) {
                                                                 parent.innerHTML = `
-                                    <div class="h-8 sm:h-10 px-3 py-1 rounded-full bg-[#4DA2FF]/20 border border-[#4DA2FF]/30 flex items-center justify-center">
-                                        <span class="text-[#4DA2FF] text-xs font-medium whitespace-nowrap">
-                                            ${category}
-                                        </span>
-                                    </div>
-                                `;
+                                                                    <div class="h-8 sm:h-10 px-3 py-1 rounded-full bg-[#4DA2FF]/20 border border-[#4DA2FF]/30 flex items-center justify-center shrink-0">
+                                                                        <span class="text-[#4DA2FF] text-xs font-medium whitespace-nowrap">
+                                                                            ${category}
+                                                                        </span>
+                                                                    </div>
+                                                                `;
                                                             }
                                                         }}
                                                     />
                                                 </div>
                                             );
                                         }
+
+                                        // Add ellipsis if there are more categories than shown
+                                        if (
+                                            showEllipsis ||
+                                            categoriesShown <
+                                                project.categories.length
+                                        ) {
+                                            icons.push(
+                                                <span
+                                                    key="more"
+                                                    className="text-[#e6ecffb2] text-xs whitespace-nowrap shrink-0"
+                                                >
+                                                    ...
+                                                </span>
+                                            );
+                                        }
+
                                         return icons;
                                     })()}
                                 </div>
 
-                                {/* Description */}
-                                <p className="self-stretch [font-family:'Satoshi-Regular',Helvetica] font-normal text-[#e6ecffb2] text-sm sm:text-base tracking-[-0.32px] leading-[22px] overflow-hidden text-ellipsis [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical]">
+                                {/* Description - 4 lines with ellipsis */}
+                                <p className="self-stretch [font-family:'Satoshi-Regular',Helvetica] font-normal text-[#e6ecffb2] text-sm sm:text-base tracking-[-0.32px] leading-[22px] overflow-hidden text-ellipsis [display:-webkit-box] [-webkit-line-clamp:4] [-webkit-box-orient:vertical] flex-grow">
                                     {project.description}
                                 </p>
                             </div>

@@ -136,7 +136,7 @@ export const ProjectVideoPage = (): JSX.Element => {
     };
 
     return (
-        <div className="relative w-full min-w-full bg-[#050505] overflow-hidden flex flex-col">
+        <div className="relative w-full min-w-full bg-[#000000] overflow-hidden flex flex-col">
             <div className="relative w-full min-w-full">
                 {/* Background grid */}
                 <div className="bg-grid-container h-screen relative">
@@ -169,9 +169,9 @@ export const ProjectVideoPage = (): JSX.Element => {
 
                         <Button
                             variant="outline"
-                            className="h-[50px] px-4 sm:px-6 lg:px-8 py-[5px] rounded-[999px] border border-solid border-[#ffffff1a] bg-transparent"
+                            className="bg-transparent hover:bg-[#ffffff1a] text-white border border-[#ffffff1a] rounded-full h-[50px] px-6 sm:px-8"
                         >
-                            <span className="bg-[linear-gradient(180deg,rgba(255,255,255,1)_9%,rgba(255,255,255,0.3)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] [font-family:'Satoshi-Medium',Helvetica] font-medium text-transparent text-sm sm:text-base leading-6">
+                            <span className="bg-[linear-gradient(180deg,rgba(255,255,255,1)_9%,rgba(255,255,255,0.3)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] [font-family:'Satoshi-Medium',Helvetica] font-medium text-transparent text-base">
                                 Submit Your Project
                             </span>
                         </Button>
@@ -313,126 +313,134 @@ export const ProjectVideoPage = (): JSX.Element => {
                         All Videos
                     </h2>
 
-                    <p className="[font-family:'Satoshi-Medium',Helvetica] font-medium text-[#e6ecff] text-base tracking-[0.16px] leading-normal ml-4 sm:ml-6 lg:ml-8">
-                        Filter by Categories
-                    </p>
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <p className="[font-family:'Satoshi-Medium',Helvetica] font-medium text-[#e6ecff] text-base tracking-[0.16px] leading-normal">
+                            Filter by Categories
+                        </p>
 
-                    {/* Category Filter Bar */}
-                    <div className="flex flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8 lg:mt-[30px] ml-4 sm:ml-6 lg:ml-8 mb-8 sm:mb-12 lg:mb-16">
-                        {categories.map((category) => (
-                            <button
-                                key={category.id}
-                                className={`transition-transform duration-200 hover:scale-105 rounded-full border ${
-                                    selectedCategory === category.name
-                                        ? "border-[#4DA2FF] bg-[#4DA2FF]/10"
-                                        : "border-[#ffffff1a] bg-transparent"
-                                }`}
-                                onClick={() =>
-                                    setSelectedCategory((prev) =>
-                                        prev === category.name
-                                            ? undefined
-                                            : category.name
-                                    )
-                                }
-                            >
-                                <img
-                                    src={`public${category.icon}`}
-                                    alt={category.name}
-                                    className="h-10 sm:h-12"
-                                />
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* All videos grid */}
-                    <div className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-10 mb-16 sm:mb-20 lg:mb-[50px]">
-                        {loading &&
-                            allVideos.length === 0 &&
-                            Array.from({ length: 12 }).map((_, i) => (
-                                <div
-                                    key={`all-skel-${i}`}
-                                    className="w-[203px] h-[260px] rounded-[20px] bg-[#0b0b0b] animate-pulse"
-                                />
+                        {/* Category Filter Bar */}
+                        <div className="flex flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8 lg:mt-[30px] mb-8 sm:mb-12 lg:mb-16">
+                            {categories.map((category) => (
+                                <button
+                                    key={category.id}
+                                    className={`transition-transform duration-200 scale-105 hover:scale-110 rounded-full border ${
+                                        selectedCategory === category.name
+                                            ? "border-[#4DA2FF] bg-[#4DA2FF]/10"
+                                            : "border-[#ffffff1a] bg-transparent"
+                                    }`}
+                                    onClick={() =>
+                                        setSelectedCategory((prev) =>
+                                            prev === category.name
+                                                ? undefined
+                                                : category.name
+                                        )
+                                    }
+                                >
+                                    <img
+                                        src={`public${category.icon}`}
+                                        alt={category.name}
+                                        className="h-10 sm:h-12"
+                                    />
+                                </button>
                             ))}
-                        {!loading && error && (
-                            <div className="text-red-400">{error}</div>
-                        )}
-                        {allVideos.map((project) => (
-                            <Card
-                                key={project.id}
-                                className="w-[200px] sm:w-[220px] md:w-[240px] bg-transparent border-none"
-                            >
-                                <CardContent className="p-0 flex flex-col gap-2.5">
-                                    <div
-                                        className="relative w-full h-[250px] sm:h-[270px] md:h-[290px] rounded-[20px] overflow-hidden"
-                                        style={{
-                                            backgroundImage: `url(${project.thumbnail})`,
-                                            backgroundSize: "cover",
-                                            backgroundPosition: "50% 50%",
-                                        }}
-                                    >
-                                        <Button
-                                            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[50px] h-[50px] sm:w-[55px] sm:h-[55px] md:w-[61px] md:h-[61px] rounded-full flex items-center justify-center p-2.5 border-none shadow-[inset_0px_3px_4px_#ffffff1a] backdrop-blur-[2px] bg-[linear-gradient(180deg,rgba(0,0,0,0.4)_0%,rgba(0,0,0,0.3)_100%)] before:content-[''] before:absolute before:inset-0 before:p-px before:rounded-full before:bg-[linear-gradient(153deg,rgba(255,255,255,0.32)_0%,rgba(255,255,255,0.16)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude]"
-                                            variant="ghost"
-                                            onClick={() =>
-                                                setActiveVideo(project)
-                                            }
-                                        >
-                                            <PlayIcon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
-                                        </Button>
-                                    </div>
+                        </div>
 
-                                    <div className="flex items-center gap-3 w-full">
-                                        <div className="relative">
-                                            <div className="inline-flex items-center justify-center p-[0.75px] rounded overflow-hidden">
-                                                <div className="absolute w-[36px] h-[36px] top-0 left-0 rounded bg-[linear-gradient(302deg,rgba(77,162,255,1)_0%,rgba(77,162,255,0)_25%)]" />
-                                                <div className="absolute w-[36px] h-[36px] top-0 left-0 rounded bg-[linear-gradient(139deg,rgba(77,162,255,1)_0%,rgba(77,162,255,0)_25%)]" />
-                                                <div className="inline-flex items-center justify-center p-[7px] relative bg-black rounded">
-                                                    <div
-                                                        className="w-[22px] h-[22px] bg-cover bg-[50%_50%]"
-                                                        style={{
-                                                            backgroundImage: `url(${
-                                                                projectLogos[
-                                                                    project
-                                                                        .projectId
-                                                                ] || "/sd.svg"
-                                                            })`,
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
+                        {/* All videos grid - UPDATED LAYOUT */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 sm:gap-8 lg:gap-10 mb-16 sm:mb-20 lg:mb-[50px]">
+                            {loading &&
+                                allVideos.length === 0 &&
+                                Array.from({ length: 12 }).map((_, i) => (
+                                    <div
+                                        key={`all-skel-${i}`}
+                                        className="w-full aspect-[3/4] rounded-[20px] bg-[#0b0b0b] animate-pulse"
+                                    />
+                                ))}
+                            {!loading && error && (
+                                <div className="text-red-400 col-span-full">
+                                    {error}
+                                </div>
+                            )}
+                            {allVideos.map((project) => (
+                                <Card
+                                    key={project.id}
+                                    className="w-full bg-transparent border-none"
+                                >
+                                    <CardContent className="p-0 flex flex-col gap-2.5">
+                                        <div
+                                            className="relative w-full aspect-[3/4] rounded-[20px] overflow-hidden"
+                                            style={{
+                                                backgroundImage: `url(${project.thumbnail})`,
+                                                backgroundSize: "cover",
+                                                backgroundPosition: "50% 50%",
+                                            }}
+                                        >
+                                            <Button
+                                                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[50px] h-[50px] sm:w-[55px] sm:h-[55px] md:w-[61px] md:h-[61px] rounded-full flex items-center justify-center p-2.5 border-none shadow-[inset_0px_3px_4px_#ffffff1a] backdrop-blur-[2px] bg-[linear-gradient(180deg,rgba(0,0,0,0.4)_0%,rgba(0,0,0,0.3)_100%)] before:content-[''] before:absolute before:inset-0 before:p-px before:rounded-full before:bg-[linear-gradient(153deg,rgba(255,255,255,0.32)_0%,rgba(255,255,255,0.16)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude]"
+                                                variant="ghost"
+                                                onClick={() =>
+                                                    setActiveVideo(project)
+                                                }
+                                            >
+                                                <PlayIcon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+                                            </Button>
                                         </div>
 
-                                        <h3 className="[font-family:'Satoshi-Medium',Helvetica] font-medium text-white text-lg sm:text-xl md:text-xl tracking-[-0.48px] leading-7 flex-1">
-                                            {project.title}
-                                        </h3>
-                                    </div>
+                                        <div className="flex items-center gap-3 w-full">
+                                            <div className="relative">
+                                                <div className="inline-flex items-center justify-center p-[0.75px] rounded overflow-hidden">
+                                                    <div className="absolute w-[36px] h-[36px] top-0 left-0 rounded bg-[linear-gradient(302deg,rgba(77,162,255,1)_0%,rgba(77,162,255,0)_25%)]" />
+                                                    <div className="absolute w-[36px] h-[36px] top-0 left-0 rounded bg-[linear-gradient(139deg,rgba(77,162,255,1)_0%,rgba(77,162,255,0)_25%)]" />
+                                                    <div className="inline-flex items-center justify-center p-[7px] relative bg-black rounded">
+                                                        <div
+                                                            className="w-[22px] h-[22px] bg-cover bg-[50%_50%]"
+                                                            style={{
+                                                                backgroundImage: `url(${
+                                                                    projectLogos[
+                                                                        project
+                                                                            .projectId
+                                                                    ] ||
+                                                                    "/sd.svg"
+                                                                })`,
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <div className="flex items-center gap-3 flex-wrap">
-                                        {project.categories.map(
-                                            (category, index) => (
-                                                <img
-                                                    key={`${project.id}-category-${index}`}
-                                                    src={`public/category/${category
-                                                        .toLowerCase()
-                                                        .replace(
-                                                            /\s*&\s*/g,
-                                                            "-"
-                                                        )
-                                                        .replace(/\s+/g, "-")
-                                                        .replace(
-                                                            /open-source/i,
-                                                            "opensource"
-                                                        )}.svg`}
-                                                    alt={category}
-                                                    className="h-8 w-auto"
-                                                />
-                                            )
-                                        )}
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
+                                            <h3 className="[font-family:'Satoshi-Medium',Helvetica] font-medium text-white text-lg sm:text-xl md:text-xl tracking-[-0.48px] leading-7 flex-1">
+                                                {project.title}
+                                            </h3>
+                                        </div>
+
+                                        <div className="flex items-center gap-3 flex-wrap">
+                                            {project.categories.map(
+                                                (category, index) => (
+                                                    <img
+                                                        key={`${project.id}-category-${index}`}
+                                                        src={`public/category/${category
+                                                            .toLowerCase()
+                                                            .replace(
+                                                                /\s*&\s*/g,
+                                                                "-"
+                                                            )
+                                                            .replace(
+                                                                /\s+/g,
+                                                                "-"
+                                                            )
+                                                            .replace(
+                                                                /open-source/i,
+                                                                "opensource"
+                                                            )}.svg`}
+                                                        alt={category}
+                                                        className="h-8 w-auto"
+                                                    />
+                                                )
+                                            )}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -441,7 +449,7 @@ export const ProjectVideoPage = (): JSX.Element => {
             <footer className="w-full px-4 sm:px-6 lg:px-10 py-8 sm:py-12 border-t border-[#ffffff1a] relative z-40">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="col-span-1">
+                        <div className="col-span-1 ml-8">
                             <div className="flex items-center gap-2 mb-8">
                                 <div className="w-5 h-[25px] bg-[url(https://c.animaapp.com/mdei0unhm8Lc4h/img/vector.svg)] bg-[100%_100%]" />
                                 <span className="[font-family:'TWK_Everett-Medium',Helvetica] text-xl font-medium text-white">
@@ -453,7 +461,7 @@ export const ProjectVideoPage = (): JSX.Element => {
                             </p>
                         </div>
 
-                        <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="ml-[550px] col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
                                 {footerLinks.resources.map((link, index) => (
                                     <a
@@ -464,12 +472,6 @@ export const ProjectVideoPage = (): JSX.Element => {
                                         {link}
                                     </a>
                                 ))}
-                                <p className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-[#e6ecffb2] text-base tracking-[-0.05px] leading-[25.6px] mt-[20px]">
-                                    Designed with ❤ by{" "}
-                                    <span className="[font-family:'Satoshi-Medium',Helvetica] font-medium text-white">
-                                        @ParryDesigns
-                                    </span>
-                                </p>
                             </div>
 
                             <div>

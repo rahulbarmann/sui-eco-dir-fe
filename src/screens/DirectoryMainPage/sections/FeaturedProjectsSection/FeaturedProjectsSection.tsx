@@ -16,7 +16,7 @@ export const FeaturedProjectsSection = (): JSX.Element => {
 
     return (
         <footer className="w-full py-12 sm:py-16 px-4 sm:px-6 lg:px-10">
-            <Separator className="mb-8" />
+            <Separator className="mb-8 bg-[#e6ecffb2]" />
 
             <div className="flex flex-col md:flex-row justify-between">
                 {/* Left side with logo and copyright */}
@@ -41,20 +41,11 @@ export const FeaturedProjectsSection = (): JSX.Element => {
                             <a
                                 key={index}
                                 href={link.href}
-                                className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-white text-sm sm:text-base tracking-[-0.32px] leading-[25.6px]"
+                                className="[font-family:'Satoshi-Regular',Helvetica] hover:text-[#e6ecffb2] font-normal text-white text-sm sm:text-base tracking-[-0.32px] leading-[25.6px]"
                             >
                                 {link.text}
                             </a>
                         ))}
-
-                        <div className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-transparent text-sm sm:text-base tracking-[-0.32px] leading-[25.6px] mt-4">
-                            <span className="text-[#e6ecffb2] tracking-[-0.05px]">
-                                Designed with ❤ by{" "}
-                            </span>
-                            <span className="[font-family:'Satoshi-Medium',Helvetica] font-medium text-white tracking-[-0.05px]">
-                                @ParryDesigns
-                            </span>
-                        </div>
                     </div>
 
                     {/* Second column of links */}
@@ -63,7 +54,7 @@ export const FeaturedProjectsSection = (): JSX.Element => {
                             <a
                                 key={index}
                                 href={link.href}
-                                className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-white text-sm sm:text-base tracking-[-0.32px] leading-[25.6px]"
+                                className="[font-family:'Satoshi-Regular',Helvetica] hover:text-[#e6ecffb2] font-normal text-white text-sm sm:text-base tracking-[-0.32px] leading-[25.6px]"
                             >
                                 {link.text}
                             </a>

@@ -17,16 +17,24 @@ export async function apiGet<T>(
     path: string,
     params?: Record<string, string | number | boolean | undefined>
 ): Promise<ApiResponse<T>> {
-    const url = new URL(`${API_BASE_URL}${path}`);
+    // Build the full URL
+    let fullUrl = `${API_BASE_URL}${path}`;
+
+    // Add query parameters if provided
     if (params) {
+        const searchParams = new URLSearchParams();
         Object.entries(params).forEach(([key, value]) => {
             if (value !== undefined && value !== null) {
-                url.searchParams.set(key, String(value));
+                searchParams.set(key, String(value));
             }
         });
+        const queryString = searchParams.toString();
+        if (queryString) {
+            fullUrl += `?${queryString}`;
+        }
     }
 
-    const res = await fetch(url.toString(), {
+    const res = await fetch(fullUrl, {
         credentials: "include",
     });
 

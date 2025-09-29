@@ -307,7 +307,7 @@ export const ProjectVideoPage = (): JSX.Element => {
             </div>
 
             {/* All Videos Section */}
-            <div className="relative z-40 mt-16 sm:mt-20 lg:mt-24">
+            <div className="relative z-40 mt-32 sm:mt-40 lg:mt-48">
                 <div className="px-2 sm:px-4 lg:px-6">
                     <h2 className="text-center [font-family:'TWK_Everett-Medium',Helvetica] font-medium text-white text-2xl sm:text-3xl lg:text-[32px] tracking-[0.32px] leading-normal mb-8 sm:mb-10 lg:mb-12">
                         All Videos

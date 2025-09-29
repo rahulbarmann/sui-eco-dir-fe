@@ -277,7 +277,7 @@ export const ProjectPage = (): JSX.Element => {
 
                                 {/* Right Column - Project Video/Image */}
                                 <div
-                                    className="relative w-full h-[355px] rounded-[20px] overflow-hidden"
+                                    className="relative w-full max-w-[500px] h-[355px] rounded-[20px] overflow-hidden mx-auto lg:mx-0"
                                     style={{
                                         background: project?.heroImage
                                             ? `url(${project.heroImage}) 50% 50% / cover`

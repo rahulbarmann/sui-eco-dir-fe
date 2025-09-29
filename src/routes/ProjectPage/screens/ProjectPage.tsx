@@ -1,4 +1,4 @@
-import { PlayIcon, Star, GitFork, AlertCircle } from "lucide-react";
+import { Star, GitFork, AlertCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../../../components/ui/button";
 import { Card } from "../../../components/ui/card";
@@ -155,9 +155,10 @@ export const ProjectPage = (): JSX.Element => {
 
     return (
         <div className="relative w-full min-w-full bg-[#000000] overflow-hidden flex flex-col">
+            {/* Hero Section with controlled height */}
             <div className="relative w-full min-w-full">
-                {/* Background grid */}
-                <div className="bg-grid-container h-screen relative">
+                {/* Background grid - fixed height instead of full screen */}
+                <div className="bg-grid-container h-[600px] relative">
                     <img
                         className="w-full h-full object-cover object-top"
                         alt="Background grid"
@@ -290,8 +291,8 @@ export const ProjectPage = (): JSX.Element => {
                 </div>
             </div>
 
-            {/* Dashboard Screenshots Section */}
-            <section className="relative px-4 sm:px-6 lg:px-10 py-8 mt-8 sm:mt-12 lg:mt-16 z-80">
+            {/* Dashboard Screenshots Section - Fixed spacing */}
+            <section className="relative px-4 sm:px-6 lg:px-10 py-8 mt-12 z-80">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {dashboardScreenshots.map((screenshot, index) => (

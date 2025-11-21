@@ -13,4 +13,12 @@ export default defineConfig(({ mode }) => ({
       plugins: [tailwind()],
     },
   },
+  server: {
+    proxy: {
+      '/api/v1': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
+    },
+  },
 }));
